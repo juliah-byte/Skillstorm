@@ -2,7 +2,7 @@ package com.skillstorm.DAO;
 
 //import java.util.Set;
 
-import com.skillstorm.beans.Flight;
+//import com.skillstorm.beans.Flight;
 
 public class myMainDAO {
 	
@@ -16,8 +16,11 @@ public class myMainDAO {
 		Set<Flight> flight = dao.findAll();
 		System.out.println(flight);*/
 		
-		Flight flight = dao.findbyId(7);
-		System.out.println(flight);
+		
+		dao.findAll();
+		
+		//Flight flight = dao.deleteByFlightNumber("United");
+		//System.out.println(flight);
 		
 	}
 

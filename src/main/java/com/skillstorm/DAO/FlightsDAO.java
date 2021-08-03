@@ -27,9 +27,9 @@ public class FlightsDAO {
 		}
 	}
 
-	public Flight create(Flight flight) {
-		
-		try(Connection conn = DriverManager.getConnection(url, username, password)) {
+	public Flight create(Flight flight){
+		try(Connection conn = DriverManager.getConnection(url, username, password)){
+				conn.setAutoCommit(false);
 			String sql = "insert into flights(AIRLINE, ORIGIN, DESTINATION, DEPARTURE_TIME, ARRIVAL_TIME, FLIGHT_NUMBER)"
 					+ " values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -48,32 +48,59 @@ public class FlightsDAO {
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
+			//conn.rollback();
 			//rethrow
 			
 		}
 		return flight;
 	}
 	
-	public void update(Flight flight) {
+	public void updateFlightNumber(String flightNum, int flightId) {
 		
+		try(Connection conn = DriverManager.getConnection(url, username, password)){
+			String sql = "update flights set FLIGHT_NUMBER = ? where FLIGHT_ID = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, flightNum);
+			stmt.setInt(2, flightId);
+			stmt.executeUpdate();
+		}catch(SQLException e ) {
+			
+			e.printStackTrace();
+		}
 	}
+		
 	
-	public void delete(Flight flight) {
+	public void deleteByFlightNumber(int flightId) {
+		
+		try(Connection conn = DriverManager.getConnection(url, username, password)){
+			String sql = "delete from flights where FLIGHT_ID = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, flightId);
+			stmt.executeUpdate();
+
+		}catch(SQLException e ) {
+			
+			e.printStackTrace();
+		}
 		
 	}
 	
 	public Flight findbyId(int id) {
 		try(Connection conn = DriverManager.getConnection(url, username, password)) {
+			Flight mine;
 			String sql = "select * from flights where FLIGHT_ID = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			return new Flight(rs.getInt("FLIGHT_ID"), rs.getString("AIRLINE"), 
+			
+			mine = new Flight(rs.getInt("FLIGHT_ID"), rs.getString("AIRLINE"), 
 						rs.getString("ORIGIN"), rs.getString("DESTINATION"), rs.getString("DEPARTURE_TIME"),
 						rs.getString("ARRIVAL_TIME"), rs.getString("FLIGHT_NUMBER"));
-				
-			}catch(Exception e) {
+						
+			System.out.println(mine);
+			return mine;
+			}catch(SQLException e) {
 			
 			e.printStackTrace();
 			return null;
@@ -83,24 +110,26 @@ public class FlightsDAO {
 	
 	public Set<Flight> findAll(){
 		Set<Flight> results = new HashSet<>();
-		try(Connection conn = DriverManager.getConnection(url, username, password)) {
+		try(Connection conn = DriverManager.getConnection(url, username, password)){
 			String sql = "select * from flights";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
+				int flightId = rs.getInt("Flight_ID");
 				String airline = rs.getString("AIRLINE");
 				String origin = rs.getString("ORIGIN");
 				String destination = rs.getString("DESTINATION");
 				String departure_time = rs.getString("DEPARTURE_TIME");
 				String arrival_time = rs.getString("ARRIVAL_TIME");
 				String flight_number = rs.getString("FLIGHT_NUMBER");
-				Flight flight = new Flight(airline, origin, destination, departure_time, arrival_time, flight_number);
+				Flight flight = new Flight(flightId, airline, origin, destination, departure_time, arrival_time, flight_number);
 				results.add(flight);
 			}
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.print(results);
 		return results;
 	}	
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html> <!--Good for processing-->
+<html>
+    <head>
+        <!--metadata-->
+        <title>Java Flights API</title>
+    </head>
+    <body>
+        <h1>Welcome to Java Flights</h1>
+        <table>
+            <tr><th>Airline</th><th>Origin</th><th>Destination</th><th>Depature Time</th><th>Arrival Time</th><th>Flight Number</th></tr>
+            <tr><th>Delta</th><th>RDU Raleigh-Durham</th><th>JFK </th><th>320PM</th><th>502PM</th><th>DL5841</th></tr>
+        </table>
+    </body>
+    <script type="text/javascript">
+        // Ajax - asynchronous JavaScript and XML
+        // XHR core object of Ajax
+        window.onload = function(response){
+            var xhr = new XMLHttpRequest();
+            
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    console.log(response.responseText)
+                }
+            }
+
+            xhr.open('GET', '/flight-api/api/flight')
+            
+            xhr.send();
+        } 
+    </script>
+</html>
