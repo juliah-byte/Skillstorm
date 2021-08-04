@@ -27,9 +27,11 @@ public class FlightsDAO {
 		}
 	}
 
-	public Flight create(Flight flight){
-		try(Connection conn = DriverManager.getConnection(url, username, password)){
-				conn.setAutoCommit(false);
+	public Flight create(Flight flight) throws SQLException{
+			Connection conn = DriverManager.getConnection(url, username, password);
+			conn.setAutoCommit(false);
+			
+			try {
 			String sql = "insert into flights(AIRLINE, ORIGIN, DESTINATION, DEPARTURE_TIME, ARRIVAL_TIME, FLIGHT_NUMBER)"
 					+ " values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -39,16 +41,16 @@ public class FlightsDAO {
 			stmt.setString(4, flight.getDeparture());
 			stmt.setString(5, flight.getArrival());
 			stmt.setString(6, flight.getFlightNumber());
-			stmt.execute();
-			
-			/**ResultSet keys = stmt.getGeneratedKeys();
+			stmt.executeUpdate();
+			conn.commit();
+			ResultSet keys = stmt.getGeneratedKeys();
 			keys.next();
 			int id = keys.getInt(1);
-			flight.setId(id);*/
+			flight.setId(id);
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			//conn.rollback();
+			conn.rollback();
 			//rethrow
 			
 		}

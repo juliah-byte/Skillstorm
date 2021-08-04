@@ -15,9 +15,15 @@
                  color: black;
                  padding-left: 150px;
              }
+
+             h3{
+                 color: black;
+                 padding-left: 250px;
+             }
             
             #home-list {
                 background-color:green;
+                padding: 150x;
             }
             .box {
                 padding: 50px;
@@ -40,42 +46,57 @@
         <div class="cointainer-fluid">
             <div><h1>Welcome to Java Flights</h1></div>
             <div class ="row">
-                <div class="col-4">
+                <div class="col-lg-4">
                     <h2>Add Flight</h2>
                     <form action = "#">
-                        <div class="form-group" method ="post" action="/flight.api/api/flight">
-                            <label>Airline</label>
-                            <input class="form-control" id = "airline" value="flight-airline" />
+                        <div class="form-group" method ="post" action="/flight.api/api/flight" placeholder="Delta">
+                            <label for="airline">Airline</label>
+                            <input class="form-control" id = "airline" placeholder="Delta" />
                         </div>
                         <div class="form-group">
-                            <label>Origin</label>
-                            <input class="form-control"  id = "origin" value="flight-origin" />
+                            <label for="origin">Origin</label>
+                            <input class="form-control"  id = "origin" placeholder="JFK"/>
                         </div>
                         <div class="form-group">
-                            <label>Destination</label>
-                            <input class="form-control" id = "destination" value="flight-destination" />
+                            <label for="destination">Destination</label>
+                            <input class="form-control" id = "destination" placeholder="RDU" />
                         </div>
                         <div class="form-group" >
-                            <label>Departure</label>
-                            <input class="form-control" id = "depature" value="flight-depature" />
+                            <label for="departure">Departure</label>
+                            <input class="form-control" id = "departure" placeholder="722PM"  />
                         </div>
                         <div class="form-group">
-                            <label>Arrival</label>
-                            <input class="form-control" id = "arrival" value="flight-arrival" />
+                            <label for="arrival">Arrival</label>
+                            <input class="form-control" id = "arrival" placeholder="1055PM" />
                         </div>
                         <div class="form-group">
-                            <label>Flight Number</label>
-                            <input class="form-control" id = "flight Number" value="flight-number" />
+                            <label for="flight Number">Flight Number</label>
+                            <input class="form-control" id = "flight Number" placeholder="D10991" />
                         </div>
                         <div>
                             <input class="btn btn-primary submit-button" type="submit" value="Add Flight" />
                         </div>
                     </form>
                 </div>
-                <div id="home-list" class = "col-6">  
-                    <h2>Scheduled Flights</h2>
-                    <table class = "table">
-                        <tr><th>Airline</th><th>Origin</th><th>Destination</th><th>Origin</th><th>Depature</th><th>Arrival</th><th>Flight Number</th></tr>
+                <div id="home-list" class = "col-lg-7">  
+                    <h3>Scheduled Flights</h3>
+                    <table class = "table align-middle">
+                        <tr>
+                            <th scope ="col">Airline</th>
+                            <th scope="col">Origin</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Depature</th>
+                            <th scope="col">Arrival</th>
+                            <th scope="col">Flight Number</th>
+                        </tr>
+                        <tr>
+                            <th scope ="col">Delta</th>
+                            <th scope="col">JFK</th>
+                            <th scope="col">RDU</th>
+                            <th scope="col">722PM</th>
+                            <th scope="col">1005PM</th>
+                            <th scope="col">D10991</th>
+                        </tr>
                     </table>
              </div>
             </div>

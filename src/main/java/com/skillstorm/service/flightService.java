@@ -12,10 +12,9 @@ public class flightService {
 	
 	FlightsDAO dao = new FlightsDAO();
 	
-	public Flight createFlight(Flight flight) {
-		return dao.create(flight);
-	}
-	
+	/**public void createFlight(Flight flight) {
+		dao.create(flight); }*/
+		
 	public void updateFlight() {
 		
 	}

@@ -4,6 +4,7 @@ package com.skillstorm.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -52,10 +53,16 @@ public class flightServlet extends HttpServlet{
 		Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
 		System.out.println(flight);
 		//Flight updated = service.createFlight(flight);
-		Flight updated = dao.create(flight);
-		resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
-		resp.setStatus(201); // "return"
-		resp.setContentType("application/json");
+		try {
+			Flight updated = dao.create(flight);
+			resp.setStatus(201); // "return"
+			resp.setContentType("application/json");
+			resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	@Override
