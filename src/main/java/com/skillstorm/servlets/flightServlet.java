@@ -38,6 +38,7 @@ public class flightServlet extends HttpServlet{
 		 	System.out.println("Testing2");
 			String json = new ObjectMapper().writeValueAsString(flight);
 			System.out.println("Testing3");
+			resp.addHeader("Access-Control-Allow-Origin", "*");
 			resp.getWriter().print(json);
 			resp.setStatus(200);
 		}else {
@@ -53,7 +54,8 @@ public class flightServlet extends HttpServlet{
 		InputStream requestBody = req.getInputStream();
 		Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
 		System.out.println(flight);
-		Flight updated = service.createFlight(flight);
+		//Flight updated = service.createFlight(flight);
+		Flight updated = dao.create(flight);
 		resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
 		resp.setStatus(201); // "return"
 		resp.setContentType("application/json");
@@ -61,10 +63,13 @@ public class flightServlet extends HttpServlet{
 	
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		InputStream requestBody = req.getInputStream();
-		Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
-		System.out.println(flight);
-		Flight updated = service.createFlight(flight);
+		String param1 = req.getParameter("id");
+		String param2 = req.getParameter("airline");
+		String param3 = req.getParameter("fid");
+		//InputStream requestBody = req.getInputStream();
+		//Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
+		int id = Integer.parseInt(param1);
+		Flight updated = dao.updateFlightNumber(param3, param2, id );
 		resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
 		resp.setStatus(201); // "return"
 		resp.setContentType("application/json");

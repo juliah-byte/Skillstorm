@@ -55,17 +55,29 @@ public class FlightsDAO {
 		return flight;
 	}
 	
-	public void updateFlightNumber(String flightNum, int flightId) {
+	public Flight updateFlightNumber(String flightNum, String airline, int flightId) {
 		
 		try(Connection conn = DriverManager.getConnection(url, username, password)){
-			String sql = "update flights set FLIGHT_NUMBER = ? where FLIGHT_ID = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			String sql = "update flights set FLIGHT_NUMBER = ?, AIRLINE = ? where FLIGHT_ID = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
 			stmt.setString(1, flightNum);
-			stmt.setInt(2, flightId);
+			stmt.setString(2, airline);
+			stmt.setInt(3, flightId);
 			stmt.executeUpdate();
+			
+			sql = "select * from flights where FLIGHT_ID = ?";
+			PreparedStatement stmt1 = conn.prepareStatement(sql);
+			stmt.setInt(1, flightId);
+			ResultSet rs = stmt1.executeQuery();
+					
+			return new Flight(rs.getInt("FLIGHT_ID"), rs.getString("AIRLINE"), 
+						rs.getString("ORIGIN"), rs.getString("DESTINATION"), rs.getString("DEPARTURE_TIME"),
+						rs.getString("ARRIVAL_TIME"), rs.getString("FLIGHT_NUMBER"));
+			
 		}catch(SQLException e ) {
 			
 			e.printStackTrace();
+			return null;
 		}
 	}
 		

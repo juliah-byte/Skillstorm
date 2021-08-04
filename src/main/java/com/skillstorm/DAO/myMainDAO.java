@@ -17,7 +17,7 @@ public class myMainDAO {
 		System.out.println(flight);*/
 		
 		
-		dao.findAll();
+		dao.updateFlightNumber("D1099","Delta", 5);
 		
 		//Flight flight = dao.deleteByFlightNumber("United");
 		//System.out.println(flight);
