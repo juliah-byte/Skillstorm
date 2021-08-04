@@ -3,14 +3,5 @@
   <display-name>flight-api</display-name>
 
 
-   <!-- <servlet>
-        <servlet-name>CarrrsServlet</servlet-name>
-        <servlet-class>com.skillstorm.data.CarrrsServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CarrrsServlet</servlet-name>
-        <url-pattern>/api/rental</url-pattern>
-    </servlet-mapping> Access-Control-Allow-Origin-->
- 
 
 </web-app>

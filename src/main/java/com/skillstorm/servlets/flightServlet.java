@@ -4,7 +4,6 @@ package com.skillstorm.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -16,14 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.skillstorm.DAO.FlightsDAO;
 import com.skillstorm.beans.Flight;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.skillstorm.service.flightService;
 
 
 
 @WebServlet("/api/flight")
 public class flightServlet extends HttpServlet{
 	
-	private flightService service;
+	//private flightService service;
 	FlightsDAO dao = new FlightsDAO();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +36,6 @@ public class flightServlet extends HttpServlet{
 		 	System.out.println("Testing2");
 			String json = new ObjectMapper().writeValueAsString(flight);
 			System.out.println("Testing3");
-			resp.addHeader("Access-Control-Allow-Origin", "*");
 			resp.getWriter().print(json);
 			resp.setStatus(200);
 		}else {
@@ -69,8 +66,8 @@ public class flightServlet extends HttpServlet{
 		//InputStream requestBody = req.getInputStream();
 		//Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
 		int id = Integer.parseInt(param1);
-		Flight updated = dao.updateFlightNumber(param3, param2, id );
-		resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
+		dao.updateFlightNumber(param3, param2, id );
+		//resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
 		resp.setStatus(201); // "return"
 		resp.setContentType("application/json");
 	}

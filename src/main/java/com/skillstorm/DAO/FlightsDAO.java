@@ -38,13 +38,13 @@ public class FlightsDAO {
 			stmt.setString(3, flight.getToAirport());
 			stmt.setString(4, flight.getDeparture());
 			stmt.setString(5, flight.getArrival());
-			stmt.setString(6, flight.getAirline());
-			stmt.executeUpdate();
+			stmt.setString(6, flight.getFlightNumber());
+			stmt.execute();
 			
-			ResultSet keys = stmt.getGeneratedKeys();
+			/**ResultSet keys = stmt.getGeneratedKeys();
 			keys.next();
 			int id = keys.getInt(1);
-			flight.setId(id);
+			flight.setId(id);*/
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -55,29 +55,29 @@ public class FlightsDAO {
 		return flight;
 	}
 	
-	public Flight updateFlightNumber(String flightNum, String airline, int flightId) {
+	public void updateFlightNumber(String flightNum, String airline, int flightId) {
 		
 		try(Connection conn = DriverManager.getConnection(url, username, password)){
 			String sql = "update flights set FLIGHT_NUMBER = ?, AIRLINE = ? where FLIGHT_ID = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
+			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, flightNum);
 			stmt.setString(2, airline);
 			stmt.setInt(3, flightId);
 			stmt.executeUpdate();
 			
-			sql = "select * from flights where FLIGHT_ID = ?";
-			PreparedStatement stmt1 = conn.prepareStatement(sql);
-			stmt.setInt(1, flightId);
+			/**String sql1 = "select * from flights where FLIGHT_ID = ?";
+			PreparedStatement stmt1 = conn.prepareStatement(sql1);
+			stmt1.setInt(1, flightId);
 			ResultSet rs = stmt1.executeQuery();
 					
 			return new Flight(rs.getInt("FLIGHT_ID"), rs.getString("AIRLINE"), 
 						rs.getString("ORIGIN"), rs.getString("DESTINATION"), rs.getString("DEPARTURE_TIME"),
 						rs.getString("ARRIVAL_TIME"), rs.getString("FLIGHT_NUMBER"));
-			
+			*/
 		}catch(SQLException e ) {
 			
 			e.printStackTrace();
-			return null;
+			
 		}
 	}
 		
