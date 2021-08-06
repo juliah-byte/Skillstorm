@@ -1,8 +1,8 @@
 package com.skillstorm.beans;
 
+import javax.print.attribute.standard.MediaSize.Other;
 
-
-public class Flight {
+public class Flight implements Comparable<Flight> {
 
 	private int id;
 	private String airline;
@@ -99,6 +99,11 @@ public class Flight {
 	public String toString() {
 		return "Flight [id=" + id + ", airline=" + airline + ", fromAirport=" + fromAirport + ", toAirport=" + toAirport
 				+ ", departure=" + departure + ", arrival=" + arrival + ", flightNumber=" + flightNumber + "]";
+	}
+
+	@Override
+	public int compareTo(Flight other) {
+		return this.id - other.id;
 	}
 	
 	

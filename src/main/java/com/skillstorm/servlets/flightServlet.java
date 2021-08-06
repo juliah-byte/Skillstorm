@@ -16,27 +16,23 @@ import javax.servlet.http.HttpServletResponse;
 import com.skillstorm.DAO.FlightsDAO;
 import com.skillstorm.beans.Flight;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skillstorm.service.FlightService;
 
 
 
 @WebServlet("/api/flight")
 public class flightServlet extends HttpServlet{
 	
-	//private flightService service;
+	FlightService serv = new FlightService();
 	FlightsDAO dao = new FlightsDAO();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getParameter("id") != null) {
-			System.out.println("Testing..");
 			String param = req.getParameter("id");
-			System.out.println("Testing1");
 			int id = Integer.parseInt(param);
-			System.out.println("Testing3");
-		 	//Flight flight = service.retrieveFlight(id);
-			Flight flight = dao.findbyId(id);
-		 	System.out.println("Testing2");
+		 	Flight flight = serv.retrieveFlight(id);
+			//Flight flight = dao.findbyId(id);
 			String json = new ObjectMapper().writeValueAsString(flight);
-			System.out.println("Testing3");
 			resp.getWriter().print(json);
 			resp.setStatus(200);
 		}else {
@@ -51,17 +47,11 @@ public class flightServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream requestBody = req.getInputStream();
 		Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
-		System.out.println(flight);
-		//Flight updated = service.createFlight(flight);
-		try {
-			Flight updated = dao.create(flight);
-			resp.setStatus(201); // "return"
-			resp.setContentType("application/json");
-			resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Flight updated = serv.createFlight(flight);
+		//Flight updated = dao.create(flight);
+		resp.setStatus(201); // "return"
+		resp.setContentType("application/json");
+		resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
 
 	}
 	
@@ -70,11 +60,9 @@ public class flightServlet extends HttpServlet{
 		String param1 = req.getParameter("id");
 		String param2 = req.getParameter("airline");
 		String param3 = req.getParameter("fid");
-		//InputStream requestBody = req.getInputStream();
-		//Flight flight = new ObjectMapper().readValue(requestBody, Flight.class);
 		int id = Integer.parseInt(param1);
-		dao.updateFlightNumber(param3, param2, id );
-		//resp.getWriter().print(new ObjectMapper().writeValueAsString(updated));
+		serv.updateFlight(param2, param3, id);
+		//dao.updateFlightNumber(param3, param2, id );
 		resp.setStatus(201); // "return"
 		resp.setContentType("application/json");
 	}
@@ -83,11 +71,14 @@ public class flightServlet extends HttpServlet{
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getParameter("id") != null) {
+			System.out.println("This has started");
 			String param = req.getParameter("id");
 			int id = Integer.parseInt(param);
-			//service.deleteFlight(id);
-			dao.deleteByFlightNumber(id);
+			serv.deleteFlight(id);
+			//dao.deleteByFlightNumber(id);
 			resp.setStatus(200);
+		}else {
+			System.out.println("This didn't work");
 		}
 	}
 	

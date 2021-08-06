@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.skillstorm.beans.Flight;
 
@@ -122,10 +123,10 @@ public class FlightsDAO {
 
 	}
 	
-	public Set<Flight> findAll(){
-		Set<Flight> results = new HashSet<>();
+	public TreeSet<Flight> findAll(){
+		Set<Flight> results = new TreeSet<>();
 		try(Connection conn = DriverManager.getConnection(url, username, password)){
-			String sql = "select * from flights";
+			String sql = "select * from flights order by FLIGHT_ID";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -144,7 +145,7 @@ public class FlightsDAO {
 			e.printStackTrace();
 		}
 		System.out.print(results);
-		return results;
+		return (TreeSet<Flight>) results;
 	}	
 
 }

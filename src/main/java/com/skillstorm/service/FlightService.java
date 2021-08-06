@@ -7,16 +7,25 @@ import com.skillstorm.DAO.FlightsDAO;
 import com.skillstorm.beans.Flight;
 
 
-public class flightService {
+public class FlightService {
 	
 	
 	FlightsDAO dao = new FlightsDAO();
 	
-	/**public void createFlight(Flight flight) {
-		dao.create(flight); }*/
+	public Flight createFlight(Flight flight) {
+		try {
+			return dao.create(flight);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} 
 		
-	public void updateFlight() {
+	}
 		
+	public void updateFlight(String flightNum, String airline, int flightId) {
+		
+		dao.updateFlightNumber(flightNum, airline, flightId);
 	}
 	
 	public void deleteFlight(int id) {
