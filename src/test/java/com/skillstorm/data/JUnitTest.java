@@ -15,11 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
-
-
-import com.skillstorm.DAO.FlightsDAO;
 import com.skillstorm.beans.Flight;
+import com.skillstorm.dao.FlightsDAO;
 
 public class JUnitTest {
 	
@@ -27,22 +24,18 @@ public class JUnitTest {
 	static Flight flight;
 	
 	
-	@BeforeClass
-	public static void setupBeforeClass() {
-		
-		flight = new Flight("test", "test1", "test2", "test3", "test4", "test5");
-	}
+
 	
 	@Test
 	public void testFindbyId() {
-		Flight flight = dao.findbyId(1);
+		flight = dao.findbyId(9);
 		
-		assertEquals("SOUTHWEST", flight.getAirline());
-		assertEquals("JFK,  New-York, NY", flight.getFromAirport());
-		assertEquals("DCA, Arlington, VA", flight.getToAirport());
-		assertEquals("545PM", flight.getDeparture());
-		assertEquals("115PM", flight.getArrival());
-		assertEquals("WN380", flight.getFlightNumber());
+		assertEquals("United", flight.getAirline());
+		assertEquals("SJC, San-Jose, CA", flight.getFromAirport());
+		assertEquals("MSN, Madison, WI", flight.getToAirport());
+		assertEquals("1110AM", flight.getDeparture());
+		assertEquals("255PM", flight.getArrival());
+		assertEquals("UA560", flight.getFlightNumber());
 
 	}
 	
@@ -58,7 +51,7 @@ public class JUnitTest {
 	@Test
 	public void testCreate() throws SQLException {
 		
-		//Flight flight = new Flight("test", "test1", "test2", "test3", "test4", "test5");
+		Flight flight = new Flight("test", "test1", "test2", "test3", "test4", "test5");
 		Flight flight2 = dao.create(flight);
 		assertEquals(flight, flight2);
 		
@@ -68,15 +61,21 @@ public class JUnitTest {
 	
 	@Test
 	public void testDeletebyId() {
-		dao.deleteByFlightNumber(25);
-		assertNull(dao.findbyId(25));
+		dao.deleteByFlightNumber(15);
+		assertNull(dao.findbyId(15));
 	}
 	
-	@After
-	public void teardown() {
-		
+	
+	
+	@Test
+	public void testUpdateFlightNumber() {
+		dao.updateFlightNumber("DL1099","Delta", 17);
+		Flight flight1 = dao.findbyId(17);
+		assertEquals("Delta", flight1.getAirline());
+		assertEquals("DL1099", flight1.getFlightNumber());
 	}
 	
+
 	
 
 }

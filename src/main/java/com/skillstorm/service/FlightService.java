@@ -3,8 +3,8 @@ package com.skillstorm.service;
 import java.sql.SQLException;
 import java.util.Set;
 
-import com.skillstorm.DAO.FlightsDAO;
 import com.skillstorm.beans.Flight;
+import com.skillstorm.dao.FlightsDAO;
 
 
 public class FlightService {

@@ -1,4 +1,4 @@
-package com.skillstorm.DAO;
+package com.skillstorm.dao;
 
 
 import java.sql.Connection;
@@ -52,7 +52,6 @@ public class FlightsDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 			conn.rollback();
-			//rethrow
 			
 		}
 		return flight;
@@ -67,16 +66,7 @@ public class FlightsDAO {
 			stmt.setString(2, airline);
 			stmt.setInt(3, flightId);
 			stmt.executeUpdate();
-			
-			/**String sql1 = "select * from flights where FLIGHT_ID = ?";
-			PreparedStatement stmt1 = conn.prepareStatement(sql1);
-			stmt1.setInt(1, flightId);
-			ResultSet rs = stmt1.executeQuery();
-					
-			return new Flight(rs.getInt("FLIGHT_ID"), rs.getString("AIRLINE"), 
-						rs.getString("ORIGIN"), rs.getString("DESTINATION"), rs.getString("DEPARTURE_TIME"),
-						rs.getString("ARRIVAL_TIME"), rs.getString("FLIGHT_NUMBER"));
-			*/
+	
 		}catch(SQLException e ) {
 			
 			e.printStackTrace();

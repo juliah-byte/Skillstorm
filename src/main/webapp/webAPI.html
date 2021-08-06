@@ -47,12 +47,12 @@
             <div class="text-lg-left">
               <div>
                 <img src="titlePlane1.jpg" class="img-fluid">
-                <h1>Welcome to Java Flights</h1>
+                <h1>Java Bookings</h1>
               </div>
             </div>
             <div class ="row">
                 <div class="col-lg-4">
-                    <h2>Add Flight</h2>
+                    <h2>Add Flight</h2> 
                     <form id="add-flight-form">
                         <div class="form-group">
                             <label for="airline">Airline</label>
@@ -61,12 +61,12 @@
                         <p></p>
                         <div class="form-group">
                             <label for="origin">Origin</label>
-                            <input class="form-control"  id = "origin" placeholder="JFK"/>
+                            <input class="form-control"  id = "origin" placeholder="JFK, New York, NY"/>
                         </div>
                         <p></p>
                         <div class="form-group">
                             <label for="destination">Destination</label>
-                            <input class="form-control" id = "destination" placeholder="RDU" />
+                            <input class="form-control" id = "destination" placeholder="RDU, Raleigh-Durham, NC" />
                         </div>
                         <p></p>
                         <div class="form-group" >
@@ -147,17 +147,18 @@
         </div>
     </body>
     <script type="text/javascript">
+
+        //Update Flgiht
         document.getElementById('update-flight-form').addEventListener('submit', function(event){
             event.preventDefault();
             var airline_on_form = document.getElementById('updateairline').value;
             var flightNumber_on_form = document.getElementById('updateflightNumber').value;
             var flightId_on_form = document.getElementById('updateflightId').value;
 
-            console.log('hey');
             var xhr = new XMLHttpRequest();
             xhr.onreadyStatechange = function(){
                 if(xhr.readyState == 4 && xhr.status == 201){
-                    window.alert('muy done');
+            
                 }
             }
                     var url = 'http://localhost:8080/flight.api/api/flight';
@@ -170,14 +171,16 @@
                     xhr.send();
              
         });
+
+        //Delete Flight
         document.getElementById('delete-flight-form').addEventListener('submit', function(event){
             event.preventDefault();
             var deleteFlightNumber_on_form = document.getElementById('deleteflightNumber').value;
             var xhr = new XMLHttpRequest();
-            console.log(deleteFlightNumber_on_form);
+    
             xhr.onreadystatechange = function(){
                 if(xhr.readyState == 4 && xhr.status == 200){
-                    window.alert('almost done')
+                
                 }
             }
                 var urlstart = 'http://localhost:8080/flight.api/api/flight';
@@ -188,7 +191,8 @@
                 xhr.send();
             
         });
-        // Add Flight
+
+        // Create Flight
         document.getElementById('add-flight-form').addEventListener('submit', function(event){
             event.preventDefault();
             var airline_on_form = document.getElementById('airline').value;
@@ -206,10 +210,10 @@
                 flightNumber: flightNumber_on_form
             };
             var xhr = new XMLHttpRequest();
-            console.log(flight);
+    
             xhr.onreadystatechange = function(){
                 if(xhr.readyState === 4 && xhr.status === 201){
-                    window.alert('done');
+                
                 }
             }
                 
@@ -217,8 +221,8 @@
                 xhr.send(JSON.stringify(flight));
     
         });
-        // Ajax - asynchronous JavaScript and XML
-        // XHR core object of Ajax
+
+        //Read Flights
         window.onload = function(response){
             let xhr = new XMLHttpRequest();
             
@@ -230,10 +234,7 @@
                     flightArray.forEach(flight => {
                         addFlightToTable(flight)
                     });
-                   /** for(let flight in flightArray){
-                        console.log('for loop: adding flight')
-                        addFlightToTable(flight);
-                    }*/
+                 
                 }
             }
 
